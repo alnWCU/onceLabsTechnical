@@ -1,0 +1,14 @@
+duckduckgoose:
+  description: A duck-duck-goose implementation using threads and semaphores
+  name: onceLabsTechnical
+tests:
+  onceLabsTechnical.kernel.duckduckgoose:
+    tags: duckduckgoose
+    build_on_all: true
+    harness: console
+    harness_config:
+      type: multi_line
+      regex:
+        - "duck"
+        - "duck"
+        - "goose"
