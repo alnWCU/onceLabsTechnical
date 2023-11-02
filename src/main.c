@@ -12,16 +12,16 @@ static struct k_thread mainThread_data;
 void threadKernel(int delay, struct k_sem* my_sem, struct k_sem* main_sem, char* selfStr) {
 	//struct k_thread *current_thread;
 	while (1) {
-		/* take my semaphore */
 		k_sem_take(my_sem, K_FOREVER);
 
         uint32_t timeout = sys_rand32_get();
-		k_msleep(delay * 1000 + (1000 * (timeout / (double) INT_MAX)));
+        k_msleep(delay * 1000 + (1000 * (timeout / (double) INT_MAX)));
 
         printk("%s\n", selfStr);
 		k_sem_give(main_sem);
 	}
 }
+
 void mainThreadKernel() {
     while (1) {
         k_sem_take(&mainThread_sem, K_FOREVER);
@@ -51,7 +51,7 @@ int main(void) {
 
 	k_thread_create(&threadDuck1_data, threadDuck1_stack_area,
 			K_THREAD_STACK_SIZEOF(threadDuck1_stack_area),
-			threadDuck1, NULL, NULL, NULL,
+			threadDuck1, &mainThread_sem, NULL, NULL,
 			PRIORITY, 0, K_FOREVER);
 	k_thread_name_set(&threadDuck1_data, "Duck1_thread");
 #if PIN_THREADS
@@ -62,7 +62,7 @@ int main(void) {
 
 	k_thread_create(&threadDuck2_data, threadDuck2_stack_area,
 			K_THREAD_STACK_SIZEOF(threadDuck2_stack_area),
-			threadDuck2, NULL, NULL, NULL,
+			threadDuck2, &mainThread_sem, NULL, NULL,
 			PRIORITY, 0, K_FOREVER);
 	k_thread_name_set(&threadDuck2_data, "Duck2_thread");
 #if PIN_THREADS
@@ -73,7 +73,7 @@ int main(void) {
 
 	k_thread_create(&threadGoose_data, threadGoose_stack_area,
 			K_THREAD_STACK_SIZEOF(threadGoose_stack_area),
-			threadGoose, NULL, NULL, NULL,
+			threadGoose, &mainThread_sem, NULL, NULL,
 			PRIORITY, 0, K_FOREVER);
 	k_thread_name_set(&threadGoose_data, "Goose_thread");
 #if PIN_THREADS

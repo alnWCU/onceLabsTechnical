@@ -9,7 +9,6 @@ K_THREAD_STACK_DEFINE(threadDuck2_stack_area, STACKSIZE);
 struct k_thread threadDuck2_data;
 
 void threadDuck2(struct k_sem* main_sem, void *unused2, void *unused3) {
-	ARG_UNUSED(unused1);
 	ARG_UNUSED(unused2);
 	ARG_UNUSED(unused3);
 

@@ -8,7 +8,6 @@
 K_THREAD_STACK_DEFINE(threadGoose_stack_area, STACKSIZE);
 
 void threadGoose(struct k_sem* main_sem, void *unused2, void *unused3) {
-	ARG_UNUSED(unused1);
 	ARG_UNUSED(unused2);
 	ARG_UNUSED(unused3);
 
